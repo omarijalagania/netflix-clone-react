@@ -19,6 +19,7 @@ function Row({ title, fetchUrl }) {
         {movies.map((movie) => {
           return (
             <img
+              className="row__poster"
               key={movie.id}
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.name}
