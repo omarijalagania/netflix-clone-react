@@ -20,15 +20,15 @@ function Row({ title, fetchUrl, isLargeRow }) {
   //Grab trailer video id for trailer
 
   const handleClick = (movie) => {
-    if (trailerUrl) {
-      setTrailerUrl("");
-    } else {
-      movieTrailer(movie?.name || "")
+    if (!trailerUrl) {
+      movieTrailer(movie?.title || movie?.name || movie?.original_name || "")
         .then((url) => {
           const urlParams = new URLSearchParams(new URL(url).search);
           setTrailerUrl(urlParams.get("v"));
         })
         .catch((err) => console.log(err));
+    } else {
+      setTrailerUrl("");
     }
   };
 
@@ -48,7 +48,7 @@ function Row({ title, fetchUrl, isLargeRow }) {
         {movies.map((movie) => {
           return (
             <img
-              onClick={handleClick(movie)}
+              onClick={handleClick.bind(null, movie)}
               className={`row__poster ${isLargeRow && "row__posterLarge"}`}
               key={movie.id}
               src={`${imageUrl}${
